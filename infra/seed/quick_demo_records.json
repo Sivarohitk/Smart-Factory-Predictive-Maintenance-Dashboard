@@ -1,0 +1,56 @@
+[
+  {
+    "machine_code": "MILL-001",
+    "machine_name": "Mill 001",
+    "line_name": "Line A",
+    "asset_type": "Milling Machine",
+    "machine_status": "active",
+    "source_udi": 51,
+    "captured_at": "2026-01-15T08:00:00+00:00"
+  },
+  {
+    "machine_code": "LATHE-002",
+    "machine_name": "Lathe 002",
+    "line_name": "Line A",
+    "asset_type": "CNC Lathe",
+    "machine_status": "active",
+    "source_udi": 1,
+    "captured_at": "2026-01-15T08:10:00+00:00"
+  },
+  {
+    "machine_code": "PRESS-003",
+    "machine_name": "Press 003",
+    "line_name": "Line B",
+    "asset_type": "Hydraulic Press",
+    "machine_status": "active",
+    "source_udi": 70,
+    "captured_at": "2026-01-15T08:20:00+00:00"
+  },
+  {
+    "machine_code": "CNC-004",
+    "machine_name": "CNC 004",
+    "line_name": "Line B",
+    "asset_type": "Machining Center",
+    "machine_status": "active",
+    "source_udi": 2,
+    "captured_at": "2026-01-15T08:30:00+00:00"
+  },
+  {
+    "machine_code": "ROBOT-005",
+    "machine_name": "Robot 005",
+    "line_name": "Line C",
+    "asset_type": "Robotic Arm",
+    "machine_status": "active",
+    "source_udi": 161,
+    "captured_at": "2026-01-15T08:40:00+00:00"
+  },
+  {
+    "machine_code": "PUMP-006",
+    "machine_name": "Pump 006",
+    "line_name": "Line C",
+    "asset_type": "Coolant Pump",
+    "machine_status": "active",
+    "source_udi": 3000,
+    "captured_at": "2026-01-15T08:50:00+00:00"
+  }
+]

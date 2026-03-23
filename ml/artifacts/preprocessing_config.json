@@ -1,0 +1,89 @@
+{
+  "categorical_categories": {
+    "type": [
+      "L",
+      "M",
+      "H"
+    ]
+  },
+  "categorical_column": "type",
+  "class_balance": {
+    "full": {
+      "positive_count": 339,
+      "positive_rate": 0.0339,
+      "rows": 10000
+    },
+    "test": {
+      "positive_count": 51,
+      "positive_rate": 0.034,
+      "rows": 1500
+    },
+    "train": {
+      "positive_count": 237,
+      "positive_rate": 0.033857,
+      "rows": 7000
+    },
+    "validation": {
+      "positive_count": 51,
+      "positive_rate": 0.034,
+      "rows": 1500
+    }
+  },
+  "dataset": {
+    "doi": "10.24432/C5HS5C",
+    "download_url": "https://archive.ics.uci.edu/static/public/601/ai4i%2B2020%2Bpredictive%2Bmaintenance%2Bdataset.zip",
+    "is_synthetic": true,
+    "license": "CC BY 4.0",
+    "name": "AI4I 2020 Predictive Maintenance Dataset",
+    "page_url": "https://archive.ics.uci.edu/dataset/601/ai4i"
+  },
+  "identifier_columns": [
+    "source_udi",
+    "product_id",
+    "type"
+  ],
+  "model_feature_columns": [
+    "type_L",
+    "type_M",
+    "type_H",
+    "air_temperature_k",
+    "process_temperature_k",
+    "rotational_speed_rpm",
+    "torque_nm",
+    "tool_wear_min"
+  ],
+  "numeric_feature_columns": [
+    "air_temperature_k",
+    "process_temperature_k",
+    "rotational_speed_rpm",
+    "torque_nm",
+    "tool_wear_min"
+  ],
+  "one_hot_feature_columns": [
+    "type_L",
+    "type_M",
+    "type_H"
+  ],
+  "output_files": {
+    "test": "ml/data/processed/test.csv",
+    "train": "ml/data/processed/train.csv",
+    "validation": "ml/data/processed/validation.csv"
+  },
+  "source_columns": {
+    "Air temperature [K]": "air_temperature_k",
+    "Machine failure": "machine_failure",
+    "Process temperature [K]": "process_temperature_k",
+    "Product ID": "product_id",
+    "Rotational speed [rpm]": "rotational_speed_rpm",
+    "Tool wear [min]": "tool_wear_min",
+    "Torque [Nm]": "torque_nm",
+    "Type": "type",
+    "UDI": "source_udi"
+  },
+  "split_config": {
+    "random_state": 42,
+    "test_size": 0.15,
+    "validation_size": 0.15
+  },
+  "target_column": "machine_failure"
+}

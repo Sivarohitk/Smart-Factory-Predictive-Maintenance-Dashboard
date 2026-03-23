@@ -1,0 +1,36 @@
+{
+  "dataset_is_synthetic": true,
+  "dataset_name": "AI4I 2020 Predictive Maintenance Dataset",
+  "dataset_page_url": "https://archive.ics.uci.edu/dataset/601/ai4i",
+  "decision_threshold": 0.5382328037713715,
+  "estimator": "RandomForestClassifier",
+  "feature_columns": [
+    "type_L",
+    "type_M",
+    "type_H",
+    "air_temperature_k",
+    "process_temperature_k",
+    "rotational_speed_rpm",
+    "torque_nm",
+    "tool_wear_min"
+  ],
+  "feature_count": 8,
+  "framework": "scikit-learn",
+  "hyperparameters": {
+    "class_weight": "balanced_subsample",
+    "max_depth": 10,
+    "min_samples_leaf": 5,
+    "n_estimators": 150,
+    "random_state": 42
+  },
+  "input_tensor_name": "features",
+  "label_output_name": "label",
+  "model_name": "smart_factory_failure_model",
+  "onnx_model_path": "ml/artifacts/failure_model.onnx",
+  "positive_class_label": 1,
+  "probability_output_name": "probabilities",
+  "sklearn_model_path": "ml/artifacts/failure_model.joblib",
+  "target_column": "machine_failure",
+  "task": "binary_classification",
+  "training_metrics_path": "ml/artifacts/training_metrics.json"
+}

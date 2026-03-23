@@ -1,0 +1,85 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: smart-factory-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-smart_factory}
+      MYSQL_USER: ${MYSQL_USER:-smart_factory_user}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-smart_factory_password}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_password}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./infra/mysql/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ./infra/seed/seed_machines.sql:/docker-entrypoint-initdb.d/02-seed-machines.sql:ro
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "mysqladmin ping -h 127.0.0.1 -uroot -p$$MYSQL_ROOT_PASSWORD --silent",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: smart-factory-backend
+    restart: unless-stopped
+    environment:
+      APP_NAME: ${APP_NAME:-Smart Factory Predictive Maintenance Dashboard}
+      APP_ENV: ${APP_ENV:-development}
+      DATABASE_URL: ${DATABASE_URL:-mysql+pymysql://smart_factory_user:smart_factory_password@db:3306/smart_factory}
+      MODEL_ARTIFACTS_DIR: /app/model-artifacts
+      ALERT_PROBABILITY_THRESHOLD: ${ALERT_PROBABILITY_THRESHOLD:-0.54}
+      CORS_ORIGINS: ${CORS_ORIGINS:-["http://localhost:5173"]}
+      AUTO_CREATE_TABLES: ${AUTO_CREATE_TABLES:-true}
+      DATABASE_CONNECT_MAX_ATTEMPTS: ${DATABASE_CONNECT_MAX_ATTEMPTS:-20}
+      DATABASE_CONNECT_RETRY_SECONDS: ${DATABASE_CONNECT_RETRY_SECONDS:-2}
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - ./ml/artifacts:/app/model-artifacts:ro
+      - .:/workspace:ro
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=2)",
+        ]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: smart-factory-frontend
+    restart: unless-stopped
+    environment:
+      VITE_API_BASE_URL: http://localhost:8000
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  mysql_data:
